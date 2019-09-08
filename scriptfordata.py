@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+#
+# This Python 3 script generates a set of randomized data for import into
+# AWS Forecast.
+#
+# The output is sent to the terminal.
+# To generate a file, pipe the output to a file.
+
 import random
 
 
@@ -8,7 +16,15 @@ hour = 8
 
 
 # Array to keep track of the days of the week
-days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday' ]
 day = 0
 
 
@@ -17,7 +33,7 @@ number = random.uniform(1.0,100.0)
 low = 0.0
 high = 100.0
 
-if (number < 20):
+if number < 20:
     low = number-1
     high = number+1
 else:
@@ -28,16 +44,16 @@ else:
 # Print a semi-randomly generated data for our application
 for i in range(50):
     hour = 8
-    
+
     for j in range(6):
+        # Add leading 0
         if (hour == 8 or hour == 9):
             print('2019-09-08 0%d:00:00,%.4f,%.4f,%.4f,%s' % (hour,random.uniform(low,high),latitude,longitude,days[day]))
         else:
             print('2019-09-08 %d:00:00,%.4f,%.4f,%.4f,%s' % (hour,random.uniform(low,high),latitude,longitude,days[day]))
         hour += 1
-    
-    if (day == 7):
+
+    if day == 7:
         day = 0
     else:
         day += 1
-        
