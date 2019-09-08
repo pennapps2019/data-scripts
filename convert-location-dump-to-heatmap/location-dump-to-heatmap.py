@@ -3,11 +3,13 @@
 # This Python 3 script converts a file outputted by the StillSpace app
 # into data formatted for a Google Maps Heatmap.
 #
-# The input file must be in the same directory, named 'location-log.csv'.
+# The input file must be in the same directory, named 'location_log.csv'.
 # The output file will be in the same directory, named 'location_heatmap.json'.
 
 import csv
 
+filtered = True  # Filters out spots with less than a specific value
+filter_less_than = 3
 output_filename = 'location_heatmap.json'
 
 def print_to_output(output_file, string):
@@ -17,12 +19,16 @@ def print_to_output(output_file, string):
 output = open(output_filename, 'w')
 print_to_output(output, '[')
 
-with open('location-log.csv') as csv_file:
+with open('location_log.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     first_row = True;
     for row in csv_reader:
         # Skip empty lines
         if len(row) is 0:
+            continue;
+
+        count = int(row[1])
+        if filtered and count < filter_less_than:
             continue;
 
         # Truncate to 6 decimal points
